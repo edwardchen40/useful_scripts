@@ -23,15 +23,18 @@ highlight Search term=reverse ctermbg=4 ctermfg=7
 set nu
 
 " 光標底線
-:set cursorline
+set cursorline
 
 " tab to space
-:set tabstop=4
+set tabstop=4
 
 " 自動縮排對齊間隔數
-:set shiftwidth=4
+set shiftwidth=4
 
-
+" Color configuration
+set bg=dark
+hi LineNr cterm=bold ctermfg=DarkGrey ctermbg=NONE
+hi CursorLineNr cterm=bold ctermfg=Green ctermbg=NONE
 
 " Don't write backup file if vim is being called by "crontab -e"
 au BufWrite /private/tmp/crontab.* set nowritebackup nobackup

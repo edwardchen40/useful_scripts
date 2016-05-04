@@ -1,0 +1,125 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/docs
+# All available actions: https://github.com/fastlane/fastlane/blob/master/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# By default, fastlane will send which actions are used
+# No personal data is shared, more information on https://github.com/fastlane/enhancer
+# Uncomment the following line to opt out
+# opt_out_usage
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.53.0"
+
+default_platform :ios
+ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+
+platform :ios do
+	before_all do
+		clean_cocoapods_cache
+		cocoapods
+		# increment_build_number
+		# xctool # run the tests of your app
+end
+
+desc "Runs all the tests"
+lane :test do
+	scan(
+		device: "iPad Air 2",
+		workspace: "iCHEF.xcworkspace",
+		scheme: "iCHEF_CI",
+		clean: true,
+		code_coverage: true
+	)
+# snapshot
+end
+
+
+lane :build_DEV do
+	ENV["BUNDLE_IDENTIFIER"] = "tw.com.ichef.iCHEF2.dev"
+	ENV["APPLE_ID"] = "edward.chen@ichef.com.tw"
+	ENV["APPLE_TEAM_ID"] = "8949B26WW7"
+	ENV["BUILD_PATH"] = "~/output/ipa/"
+
+	sigh(
+		{
+			app_identifier: ENV["BUNDLE_IDENTIFIER"],
+			username: ENV["APPLE_ID"],
+			team_id: ENV["APPLE_TEAM_ID"],
+			output_path: ENV["BUILD_PATH"]
+		}
+)
+
+	ENV["PROFILE_UDID"] = lane_context[SharedValues::SIGH_UDID]
+
+	gym(
+		clean: true,
+		scheme: "iCHEF", 
+		workspace: "iCHEF.xcworkspace",
+		configuration: "Debug",
+		output_directory: ENV["BUILD_PATH"],
+   ) # Build your app - more options available
+end
+
+lane :build_RC do
+	ENV["BUNDLE_IDENTIFIER"] = "tw.com.ichef.iCHEF2.rc"
+	ENV["APPLE_ID"] = "god_music@hotmail.com"
+	ENV["APPLE_TEAM_ID"] = "8949B26WW7"
+	ENV["BUILD_PATH"] = "~/Documents/"
+
+	sigh(
+		{
+			app_identifier: ENV["BUNDLE_IDENTIFIER"],
+			username: ENV["APPLE_ID"],
+			team_id: ENV["APPLE_TEAM_ID"],
+			output_path: ENV["BUILD_PATH"]
+		}
+)
+
+	ENV["PROFILE_UDID"] = lane_context[SharedValues::SIGH_UDID]
+
+	gym(
+		clean: true,
+		scheme: "iCHEF", 
+		workspace: "iCHEF.xcworkspace",
+		configuration: "Release_Candidate",
+		output_directory: ENV["BUILD_PATH"],
+   ) # Build your app - more options available
+end
+
+# You can define as many lanes as you want
+
+after_all do |lane|
+	# This block is called, only if the executed lane was successful
+
+	if ENV["SLACK_URL"]
+	slack(
+		message: "App test complete",
+		success: true,
+		payload: {
+		'Build Date' => Time.new.to_s
+		},
+		default_payloads: [:test_result, :git_branch]
+)
+	end
+end
+
+error do |lane, exception|
+# slack(
+#   message: exception.message,
+#   success: false
+# )
+	end
+end
+
+
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/docs/Platforms.md
+# All available actions: https://github.com/fastlane/fastlane/blob/master/docs/Actions.md

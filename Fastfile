@@ -54,6 +54,8 @@ lane :build_DEV do
 			username: ENV["APPLE_ID"],
 			team_id: ENV["APPLE_TEAM_ID"],
 			output_path: ENV["BUILD_PATH"]
+			# for app run in appium normally, avoid crash (assign export method)
+			development = true
 		}
 )
 

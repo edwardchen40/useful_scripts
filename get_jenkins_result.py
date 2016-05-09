@@ -6,6 +6,7 @@ import urllib2
 
 jenkinsUrl = "http://192.168.5.1:8080/job/"
 #jenkinsUrl = "https://192.168.5.1:8080/job/Autotest/lastBuild/api/json"
+#jenkinsUrl = "https://192.168.5.1:8080/job/Autotest/287/api/json" // you can use ID dierctly.
 
 
 if len( sys.argv ) > 1 : 

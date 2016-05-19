@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 cd ~/iCHEF-2.0
-tag=$(git tag -l '2.5.*' | tail -n 1 | head -n 1)
+tag=$(git tag -l '2.5.*' | tail -n 2 | head -n 1)
 
 cd ~/output/ipa/rc
 #cd ~/output/ipa/

@@ -29,10 +29,11 @@ if oldTag != newTag :
     print "================================================"
     print "= Now the release branch tag is" + newTag + " ="
     print "================================================"
-#    call("cd ~;cp ~/tmp_files/Appfile ~/iCHEF-2.0/fastlane/")
-#    call("cd ~;cp ~/tmp_files/Fastfile ~/iCHEF-2.0/fastlane/")
-#    call('~/auto_build.sh', shell=True)
-#    call('~/auto_deploy.sh',shell=True)
+    call("cd ~/iCHEF-2.0/;cp ~/tmp_files/* ~/iCHEF-2.0/fastlane/ ", shell=True)
+    call("cd ~/iCHEF-2.0/;cp ~/auto_build.sh ./;cp ~/auto_deploy.sh ./", shell=True)
+    call("~/iCHEF-2.0/auto_build.sh", shell=True)
+    call("~/iCHEF-2.0/auto_deploy.sh",shell=True)
+
 else:
     print "========================================"
     print "= Here is not a latest release version ="

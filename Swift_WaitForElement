@@ -1,0 +1,46 @@
+// method 1 , write in class 
+
+extension XCTestCase {
+    
+    func waitForElementToAppear(element: XCUIElement, timeout: TimeInterval = 5,  file: String = #file, line: UInt = #line) {
+        let existsPredicate = NSPredicate(format: "exists == true")
+        
+        self.expectation(for: existsPredicate, evaluatedWith: element, handler: nil)
+        
+        self.waitForExpectations(timeout: timeout) { (error) -> Void in
+            if (error != nil) {
+                let message = "Failed to find \(element) after \(timeout) seconds."
+                self.recordFailure(withDescription: message, inFile: file, atLine: line, expected: true)
+            }
+        }
+    }
+    
+    
+}
+
+
+// method 2, write new utility file
+
+
+import Foundation
+import XCTest
+
+extension XCTestCase {
+    
+    func waitForElementToAppear<T>(element: T, timeout: TimeInterval = 10, file: String = #file, line: UInt = #line) {
+        
+        let predicate = NSPredicate(format: "exists == true")
+        
+        expectation(for: predicate, evaluatedWith: element, handler: nil)
+        
+        waitForExpectations(timeout: timeout) { error in
+            if (error != nil) {
+                let message = "Failed to fulful expectation block for \(element) after \(timeout) seconds."
+                self.recordFailure(withDescription: message, inFile: file, atLine: line, expected: true)
+            }
+        }
+    }
+    
+}
+
+

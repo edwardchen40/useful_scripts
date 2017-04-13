@@ -8,9 +8,9 @@ import subprocess
 import requests
 
 jenkinsUrl = "http://10.56.141.23:8080/job/"
-username = "edward.chen"
-password = "!QAZxsw2"
-iftttUrl = "https://maker.ifttt.com/trigger/gln_healthcheck/with/key/bI7N2-FGqNnpMAouTSi2AU"
+username = ""
+password = ""
+iftttUrl = ""
 
 if len( sys.argv ) > 1 : 
     jobName = sys.argv[1]

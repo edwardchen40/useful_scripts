@@ -5,7 +5,7 @@
 # note: cannot execute command within ', ex. -t 'test case'
 # Reference: http://laurent.bristiel.com/re-executing-failed-test-cases-and-merging-outputs-with-robot-framework/
 
-UPDATE_TESTRAIL_SCRIPT="python ../common/testrail/update_robot_test_result_to_testrail.py --folder=$RESULT_REPORT --pid=4 --user=jpt0070@linecorp.com --pwd='line12#$' --runid=${GLN_RUN_ID}"
+UPDATE_TESTRAIL_SCRIPT="python ../common/testrail/update_robot_test_result_to_testrail.py --folder=$RESULT_REPORT --pid=4 --user=xxx --pwd='xxx' --runid=${GLN_RUN_ID}"
 
 # clean previous output files
 rm -rf $RESULT_REPORT

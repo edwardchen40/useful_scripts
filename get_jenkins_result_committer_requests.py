@@ -7,7 +7,7 @@ import base64
 import subprocess
 import requests
 
-jenkinsUrl = "http://10.56.141.23:8080/job/"
+jenkinsUrl = "http://my_url:8080/job/"
 username = ""
 password = ""
 iftttUrl = ""
